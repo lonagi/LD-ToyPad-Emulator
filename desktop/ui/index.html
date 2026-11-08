@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'none'; object-src 'none'; base-uri 'none'; form-action 'none'" />
+    <title>Toy Pad Desktop</title>
+    <link rel="stylesheet" href="styles.css" />
+    <script src="renderer.js" defer></script>
+  </head>
+  <body>
+    <header class="app-header">
+      <div class="brand">
+        <div class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></div>
+        <div><h1>Toy Pad <span>Desktop</span></h1><p>Для LEGO Dimensions</p></div>
+      </div>
+      <div class="header-actions">
+        <button id="data-folder" class="quiet">Папка фигур</button>
+        <button id="help" class="quiet">Как подключить</button>
+      </div>
+    </header>
+
+    <div id="notice" class="notice" role="status" aria-live="polite" hidden></div>
+
+    <main>
+      <aside class="library-panel" aria-label="Фигуры">
+        <div class="library-heading"><h2>Фигуры</h2><button id="import" class="quiet small">Импорт .bin</button></div>
+        <div class="tabs" role="tablist" aria-label="Источник фигур">
+          <button id="library-tab" type="button" role="tab" aria-selected="true" aria-controls="figure-list">Коллекция <span id="library-count">0</span></button>
+          <button id="catalog-tab" type="button" role="tab" aria-selected="false" aria-controls="figure-list" tabindex="-1">Каталог</button>
+        </div>
+        <div class="search-controls">
+          <label class="sr-only" for="search">Поиск по имени, миру или способности</label>
+          <input id="search" type="search" placeholder="Имя, мир или способность" autocomplete="off" />
+          <label class="sr-only" for="type-filter">Тип фигуры</label>
+          <select id="type-filter"><option value="all">Все фигуры</option><option value="character">Персонажи</option><option value="vehicle">Транспорт и гаджеты</option></select>
+        </div>
+        <p id="result-count" class="result-count"></p>
+        <div id="figure-list" class="figure-list" role="tabpanel" aria-labelledby="library-tab" tabindex="0"></div>
+        <div id="selection-details" class="selection-details" hidden>
+          <p id="selected-world" class="eyebrow"></p>
+          <h3 id="selected-name"></h3>
+          <p id="selected-abilities" class="abilities"></p>
+          <button id="selection-action" class="primary full"></button>
+        </div>
+      </aside>
+
+      <section class="workspace" aria-label="Управление падом">
+        <section class="connection-panel" aria-labelledby="connection-heading">
+          <div class="connection-summary">
+            <span id="connection-dot" class="status-dot" aria-hidden="true"></span>
+            <div><h2 id="connection-heading">Ожидание эмулятора</h2><p id="connection-message">Загружаем приложение…</p></div>
+          </div>
+          <form id="connection-form" class="connection-controls">
+            <label for="port">Порт</label><input id="port" type="number" min="1" max="65535" value="9191" required />
+            <button id="connect" type="submit" class="secondary">Подключить</button>
+          </form>
+        </section>
+
+        <div class="pad-heading"><div><p class="eyebrow">Семь мест · три зоны</p><h2>Твой Toy Pad</h2></div><span id="occupied-count" class="pad-count">0 / 7</span></div>
+        <p id="placement-hint" class="placement-hint">Добавь фигуру из каталога или импортируй файл .bin.</p>
+
+        <div class="pad" aria-label="Места на Toy Pad">
+          <section class="pad-zone zone-left" aria-label="Левая зона">
+            <p class="zone-label">Левая зона <span id="led-2" class="led-dot" aria-label="Цвет LED пока неизвестен"></span></p><div id="zone-left" class="zone-slots"></div>
+          </section>
+          <section class="pad-zone zone-center" aria-label="Центральная зона">
+            <p class="zone-label">Центр <span id="led-1" class="led-dot" aria-label="Цвет LED пока неизвестен"></span></p><div id="zone-center" class="zone-slots"></div>
+          </section>
+          <section class="pad-zone zone-right" aria-label="Правая зона">
+            <p class="zone-label">Правая зона <span id="led-3" class="led-dot" aria-label="Цвет LED пока неизвестен"></span></p><div id="zone-right" class="zone-slots"></div>
+          </section>
+        </div>
+
+        <div class="pad-footer"><span class="tiny-pad" aria-hidden="true"></span><p>Раскладка показывает отправленные команды. Подтверждение появления фигуры — в самой игре.</p></div>
+        <section class="setup-note" aria-label="Требования подключения">
+          <div class="setup-number" aria-hidden="true">i</div>
+          <div><h3>Нужна совместимая сборка эмулятора</h3><p>Cemu Remote Toypad или RPCS3 Seamless Toypad должны работать на этом же компьютере. Обычные сборки без Toypad listener к приложению не подключаются. Коллекцией можно пользоваться и без эмулятора.</p></div>
+        </section>
+      </section>
+    </main>
+    <footer class="app-footer"><span>Коллекция хранится на этом компьютере</span><span>Неофициальное приложение · LEGO Dimensions</span></footer>
+  </body>
+</html>

@@ -5,6 +5,17 @@
 
 Allows you to connect an emulated Toy Pad to your PC or video-game console.
 
+## Desktop companion (macOS / Windows)
+
+The new [`desktop/`](desktop/README.ru.md) application builds as a macOS `.app`
+or a Windows portable folder containing `.exe`. It creates/imports tag files
+and controls a **Toypad Listener v2-enabled Cemu or RPCS3 build** on the same
+computer. Stock emulator builds and physical consoles cannot receive its TCP
+commands. A compatible macOS emulator build is not included; gameplay has not
+yet been verified. See the [Russian setup and build guide](desktop/README.ru.md).
+
+The Linux USB-gadget server described below remains a separate mode.
+
 ## Features
 
 - Confirmed working on **[Cemu](https://www.youtube.com/watch?v=7CBa9u2ip-Y)**, **real Wii U**, [**RPCS3**](#rpcs3-cannot-detect-the-toy-pad), [**real PS3**](https://github.com/Berny23/LD-ToyPad-Emulator/issues/10#issuecomment-933027554), [**real PS4**](https://www.reddit.com/r/Legodimensions/comments/pb32zg/comment/hamfj29/?utm_source=share&utm_medium=web2x&context=3) and [**real PS5**](https://github.com/Berny23/LD-ToyPad-Emulator/issues/45)

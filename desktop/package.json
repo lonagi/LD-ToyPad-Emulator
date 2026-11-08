@@ -1,0 +1,20 @@
+{
+  "name": "ld-toypad-desktop",
+  "productName": "LD Toy Pad",
+  "version": "0.1.0",
+  "description": "Desktop Toy Pad companion for compatible Cemu and RPCS3 listeners",
+  "main": "main.js",
+  "private": true,
+  "license": "MIT",
+  "scripts": {
+    "start": "electron .",
+    "test": "node --test test/*.test.js",
+    "build:mac": "node scripts/package.mjs darwin arm64",
+    "build:mac:intel": "node scripts/package.mjs darwin x64",
+    "build:win": "node scripts/package.mjs win32 x64"
+  },
+  "devDependencies": {
+    "@electron/packager": "20.3.0",
+    "electron": "45.2.3"
+  }
+}

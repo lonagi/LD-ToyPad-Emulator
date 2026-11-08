@@ -1,0 +1,55 @@
+name: Desktop builds
+
+on:
+  workflow_dispatch:
+  push:
+    paths: ['desktop/**', 'server/json/**', '.github/workflows/desktop.yml']
+  pull_request:
+    paths: ['desktop/**', 'server/json/**', '.github/workflows/desktop.yml']
+
+permissions:
+  contents: read
+
+jobs:
+  package:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - runner: macos-latest
+            platform: darwin
+            arch: arm64
+          - runner: macos-latest
+            platform: darwin
+            arch: x64
+          - runner: windows-latest
+            platform: win32
+            arch: x64
+    runs-on: ${{ matrix.runner }}
+    defaults:
+      run:
+        working-directory: desktop
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: npm
+          cache-dependency-path: desktop/package-lock.json
+      - run: npm ci
+      - run: npm test
+      - run: node scripts/package.mjs ${{ matrix.platform }} ${{ matrix.arch }}
+      - name: Sign and archive macOS application
+        if: matrix.platform == 'darwin'
+        run: |
+          codesign --force --deep --sign - "dist/LD Toy Pad-darwin-${{ matrix.arch }}/LD Toy Pad.app"
+          ditto -c -k --sequesterRsrc --keepParent "dist/LD Toy Pad-darwin-${{ matrix.arch }}/LD Toy Pad.app" "dist/LD-Toy-Pad-macOS-${{ matrix.arch }}.zip"
+      - name: Archive Windows application
+        if: matrix.platform == 'win32'
+        shell: pwsh
+        run: Compress-Archive -Path 'dist/LD Toy Pad-win32-x64' -DestinationPath 'dist/LD-Toy-Pad-Windows-x64.zip'
+      - uses: actions/upload-artifact@v4
+        with:
+          name: LD-Toy-Pad-${{ matrix.platform }}-${{ matrix.arch }}
+          path: desktop/dist/*.zip
+          if-no-files-found: error
